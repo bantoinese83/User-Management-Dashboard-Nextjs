@@ -2,7 +2,7 @@ import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
-export async function logUserBehavior(userId: string, action: string, metadata?: any) {
+export async function logUserBehavior(userId: string, action: string, metadata?: Record<string, unknown>) {
   await prisma.behaviorLog.create({
     data: {
       userId,
@@ -55,4 +55,3 @@ export async function predictChurn(userId: string) {
     return { churnRisk: 'low' }
   }
 }
-

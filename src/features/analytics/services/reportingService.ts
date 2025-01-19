@@ -68,15 +68,14 @@ export const getRoleUsageStatistics = async () => {
   return roleUsage
 }
 
-export const generateCSVReport = (data: any[]): string => {
+export const generateCSVReport = (data: Record<string, unknown>[]): string => {
   const headers = Object.keys(data[0]).join(',')
   const rows = data.map(item => Object.values(item).join(','))
   return [headers, ...rows].join('\n')
 }
 
-export const generatePDFReport = (data: any): string => {
+export const generatePDFReport = (data: Record<string, unknown>): string => {
   // In a real application, you would use a PDF generation library here
   // For this example, we'll return a simple string representation
   return JSON.stringify(data, null, 2)
 }
-

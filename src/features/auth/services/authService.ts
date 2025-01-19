@@ -48,7 +48,7 @@ export const getCurrentUser = async (token: string): Promise<User | null> => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { userId: string }
     const user = await prisma.user.findUnique({ where: { id: decoded.userId } })
     return user
-  } catch (error) {
+  } catch {
     return null
   }
 }
@@ -99,4 +99,3 @@ export const changePassword = async (userId: string, oldPassword: string, newPas
     data: { password: hashedPassword }
   })
 }
-

@@ -4,7 +4,7 @@ import bcrypt from 'bcryptjs'
 
 const prisma = new PrismaClient()
 
-export const importUsers = async (userData: any[]) => {
+export const importUsers = async (userData: { email: string, password: string, name: string, role: string }[]) => {
   const importedUsers = []
 
   for (const user of userData) {
@@ -56,7 +56,7 @@ export const backupData = async () => {
   }
 }
 
-export const restoreData = async (backupData: any) => {
+export const restoreData = async (backupData: { users: any[], loginAttempts: any[], userActivities: any[] }) => {
   // In a real application, you would implement proper validation and error handling
   // This is a simplified example
   await prisma.user.deleteMany()
@@ -69,4 +69,3 @@ export const restoreData = async (backupData: any) => {
 
   return { message: 'Data restored successfully' }
 }
-
