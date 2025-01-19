@@ -47,7 +47,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setToken(storedToken)
       fetchUser(storedToken)
     }
-  }, [fetchUser])
+  }, [])
 
   const login = async (email: string, password: string) => {
     try {

@@ -1,14 +1,14 @@
 import Link from 'next/link'
 import {useAuth} from "@/src/hooks/useAuth";
 import {useRealTime} from "@/src/hooks/useRealTime";
-import { AuthProvider } from "@/src/hooks/useAuth"; // P0c01
+import { AuthProvider } from "@/src/hooks/useAuth";
 
 export const Header = () => {
   const { user, logout } = useAuth()
   const { onlineUsers } = useRealTime()
 
   return (
-    <AuthProvider> // Pb4b7
+    <AuthProvider>
       <header className="bg-gray-800 text-white p-4">
         <div className="container mx-auto flex justify-between items-center">
           <Link href="/" className="text-xl font-bold">
@@ -56,6 +56,6 @@ export const Header = () => {
           </nav>
         </div>
       </header>
-    </AuthProvider> // Pb4b7
+    </AuthProvider>
   )
 }
