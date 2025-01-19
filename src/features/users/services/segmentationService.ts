@@ -1,8 +1,8 @@
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient, Prisma } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
-export async function createSegment(name: string, description: string, criteria: Record<string, unknown>) {
+export async function createSegment(name: string, description: string, criteria: Prisma.JsonValue) {
   return prisma.userSegment.create({
     data: {
       name,
@@ -26,7 +26,7 @@ export async function assignUsersToSegment(segmentId: string) {
   }
 
   const users = await prisma.user.findMany({
-    where: segment.criteria,
+    where: segment.criteria as Prisma.UserWhereInput,
   })
 
   await prisma.userSegment.update({

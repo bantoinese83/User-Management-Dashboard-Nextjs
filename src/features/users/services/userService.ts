@@ -1,6 +1,6 @@
-import { User } from '@/src/types/user'
-import { PrismaClient } from '@prisma/client'
-import { AppError } from '@/src/lib/errorHandler'
+import {User} from '@/src/types/user'
+import {PrismaClient} from '@prisma/client'
+import {AppError} from '@/src/lib/errorHandler'
 
 const prisma = new PrismaClient()
 
@@ -57,19 +57,17 @@ export const deleteUser = async (id: string): Promise<void> => {
 }
 
 export const deactivateUser = async (id: string): Promise<User> => {
-  const user = await prisma.user.update({
-    where: { id },
-    data: { isActive: false }
+  return await prisma.user.update({
+    where: {id},
+    data: {isActive: false}
   })
-  return user
 }
 
 export const activateUser = async (id: string): Promise<User> => {
-  const user = await prisma.user.update({
-    where: { id },
-    data: { isActive: true, failedLogins: 0 }
+  return await prisma.user.update({
+    where: {id},
+    data: {isActive: true, failedLogins: 0}
   })
-  return user
 }
 
 export const getUserActivity = async (userId: string, page: number = 1, limit: number = 10): Promise<{ activities: { id: string, action: string, timestamp: Date }[], pagination: { page: number, limit: number, total: number, pages: number } }> => {

@@ -2,9 +2,13 @@ import Link from 'next/link'
 import { useAuth, AuthProvider } from "@/src/hooks/useAuth"
 import { useRealTime } from "@/src/hooks/useRealTime"
 
+interface OnlineUsers {
+  [key: string]: string
+}
+
 const HeaderComponent = () => {
   const { user, logout } = useAuth()
-  const { onlineUsers } = useRealTime()
+  const { onlineUsers } = useRealTime() as { onlineUsers: OnlineUsers }
 
   return (
     <header className="bg-gray-800 text-white p-4 shadow-lg">
