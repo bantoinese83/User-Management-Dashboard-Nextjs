@@ -1,0 +1,128 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(uuid())
+  email         String    @unique
+  name          String?
+  password      String
+  role          Role      @default(USER)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  lastLogin     DateTime?
+  isActive      Boolean   @default(true)
+  failedLogins  Int       @default(0)
+  profileImage  String?
+  bio           String?
+  preferences   Json?
+  points        Int       @default(0)
+  badges        Badge[]
+  achievements  Achievement[]
+  forumPosts    ForumPost[]
+  usageStats    UsageStats?
+  loginAttempts LoginAttempt[]
+  activities    UserActivity[]
+  status        UserStatus?
+  notifications Notification[]
+  behaviorLogs  BehaviorLog[]
+  segments      UserSegment[]
+}
+
+model Badge {
+  id          String @id @default(uuid())
+  name        String
+  description String
+  imageUrl    String
+  users       User[]
+}
+
+model Achievement {
+  id          String @id @default(uuid())
+  name        String
+  description String
+  points      Int
+  users       User[]
+}
+
+model ForumPost {
+  id        String   @id @default(uuid())
+  title     String
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  String
+}
+
+model UsageStats {
+  id           String @id @default(uuid())
+  user         User   @relation(fields: [userId], references: [id])
+  userId       String @unique
+  timeSpent    Int
+  featureUsage Json
+}
+
+model LoginAttempt {
+  id        String   @id @default(uuid())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  success   Boolean
+  timestamp DateTime @default(now())
+  ipAddress String?
+}
+
+model UserActivity {
+  id        String   @id @default(uuid())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  action    String
+  timestamp DateTime @default(now())
+  details   Json?
+}
+
+model UserStatus {
+  id        String   @id @default(uuid())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String   @unique
+  status    String   // "online" or "offline"
+  lastSeen  DateTime @default(now())
+}
+
+model Notification {
+  id        String   @id @default(uuid())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  message   String
+  type      String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model BehaviorLog {
+  id        String   @id @default(uuid())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  action    String
+  timestamp DateTime @default(now())
+  metadata  Json?
+}
+
+model UserSegment {
+  id          String @id @default(uuid())
+  name        String
+  description String?
+  criteria    Json
+  users       User[]
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
