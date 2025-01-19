@@ -1,7 +1,5 @@
-import { PrismaClient } from '@prisma/client'
+import prisma from '@/src/lib/prismaClient'
 import { AppError } from '@/src/lib/errorHandler'
-
-const prisma = new PrismaClient()
 
 export const updateUsageStats = async (userId: string, timeSpent: number, feature: string) => {
   const userStats = await prisma.usageStats.findUnique({ where: { userId } })

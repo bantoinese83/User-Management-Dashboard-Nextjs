@@ -1,8 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { PrismaClient } from '@prisma/client'
-import { verifyToken } from '@/src/lib/auth'
-
-const prisma = new PrismaClient()
+import { getCurrentUser } from '@/src/features/auth/services/authService'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'GET') {
@@ -16,8 +13,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    const decoded = verifyToken(token)
-    const user = await prisma.user.findUnique({ where: { id: decoded.userId } })
+    const user = await getCurrentUser(token)
 
     if (!user) {
       return res.status(404).json({ message: 'User not found' })
@@ -29,4 +25,3 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     res.status(401).json({ message: 'Invalid token' })
   }
 }
-
