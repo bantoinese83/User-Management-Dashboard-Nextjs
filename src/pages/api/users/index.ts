@@ -34,7 +34,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         pages: Math.ceil(total / limit),
       },
     })
-  } catch (err) {
+  } catch (error) {
     handleError(new AppError('Error fetching users', 500), res)
   }
 }

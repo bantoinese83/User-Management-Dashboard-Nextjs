@@ -21,7 +21,7 @@ export default function Analytics() {
         const stats = calculateUserStats(users)
         setUserStats(stats)
       } catch (error) {
-        setError('Failed to fetch user statistics')
+        console.error('Failed to fetch user statistics')
       } finally {
         setLoading(false)
       }
