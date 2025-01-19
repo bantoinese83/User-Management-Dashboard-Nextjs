@@ -14,7 +14,7 @@ export const Header = () => {
           User Management Dashboard
         </Link>
         <nav>
-          {user ? (
+          {user && onlineUsers ? (
             <>
               <Link href="/dashboard" className="mr-4">
                 Dashboard
@@ -57,4 +57,3 @@ export const Header = () => {
     </header>
   )
 }
-
