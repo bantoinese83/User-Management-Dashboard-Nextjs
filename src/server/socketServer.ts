@@ -1,9 +1,10 @@
 import { Server } from 'socket.io'
 import { PrismaClient } from '@prisma/client'
+import { Server as HttpServer } from 'http'
 
 const prisma = new PrismaClient()
 
-export function initializeSocketServer(server: any) {
+export function initializeSocketServer(server: HttpServer) {
   const io = new Server(server)
 
   io.on('connection', (socket) => {

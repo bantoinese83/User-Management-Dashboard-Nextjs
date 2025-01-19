@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient, User, LoginAttempt, UserActivity } from '@prisma/client'
 import { AppError } from '@/src/lib/errorHandler'
 import bcrypt from 'bcryptjs'
 
@@ -56,7 +56,7 @@ export const backupData = async () => {
   }
 }
 
-export const restoreData = async (backupData: { users: any[], loginAttempts: any[], userActivities: any[] }) => {
+export const restoreData = async (backupData: { users: User[], loginAttempts: LoginAttempt[], userActivities: UserActivity[] }) => {
   // In a real application, you would implement proper validation and error handling
   // This is a simplified example
   await prisma.user.deleteMany()

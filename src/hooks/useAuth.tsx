@@ -1,4 +1,4 @@
-import { useState, useEffect, createContext, useContext, ReactNode } from 'react'
+import { useState, useEffect, createContext, useContext, ReactNode, useCallback } from 'react'
 import { useRouter } from 'next/router'
 
 interface User {
@@ -22,15 +22,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [token, setToken] = useState<string | null>(null)
   const router = useRouter()
 
-  useEffect(() => {
-    const storedToken = localStorage.getItem('token')
-    if (storedToken) {
-      setToken(storedToken)
-      fetchUser(storedToken)
-    }
-  }, [fetchUser])
-
-  const fetchUser = async (token: string) => {
+  const fetchUser = useCallback(async (token: string) => {
     try {
       const response = await fetch('/api/auth/user', {
         headers: {
@@ -47,7 +39,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       console.error('Error fetching user:', error)
       logout()
     }
-  }
+  }, [])
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem('token')
+    if (storedToken) {
+      setToken(storedToken)
+      fetchUser(storedToken)
+    }
+  }, [fetchUser])
 
   const login = async (email: string, password: string) => {
     try {
