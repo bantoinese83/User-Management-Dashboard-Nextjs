@@ -8,11 +8,10 @@ interface LayoutProps {
 
 export const Layout = ({ children }: LayoutProps) => {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-gray-50">
       <Header />
-      <main className="flex-grow container mx-auto py-8 px-4">{children}</main>
+      <main className="flex-grow container mx-auto py-8 px-4 bg-white shadow-md rounded-lg">{children}</main>
       <Footer />
     </div>
   )
 }
-
