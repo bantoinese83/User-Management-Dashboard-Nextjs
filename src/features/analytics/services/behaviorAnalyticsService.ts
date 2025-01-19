@@ -1,6 +1,4 @@
-import { PrismaClient } from '@prisma/client'
-
-const prisma = new PrismaClient()
+import prisma from '@/src/lib/prismaClient'
 
 export async function logUserBehavior(userId: string, action: string, metadata?: Record<string, unknown>) {
   await prisma.behaviorLog.create({
