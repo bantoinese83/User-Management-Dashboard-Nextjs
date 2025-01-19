@@ -3,7 +3,7 @@ import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
-export function initializeSocketServer(server: any) {
+export function initializeSocketServer(server: never) {
   const io = new Server(server)
 
   io.on('connection', (socket) => {
