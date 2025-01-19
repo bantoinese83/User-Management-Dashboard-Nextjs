@@ -1,9 +1,8 @@
 import Link from 'next/link'
-import {useAuth} from "@/src/hooks/useAuth";
-import {useRealTime} from "@/src/hooks/useRealTime";
+import { useAuth, AuthProvider } from "@/src/hooks/useAuth"
+import { useRealTime } from "@/src/hooks/useRealTime"
 
-
-export const Header = () => {
+const HeaderComponent = () => {
   const { user, logout } = useAuth()
   const { onlineUsers } = useRealTime()
 
@@ -58,3 +57,8 @@ export const Header = () => {
   )
 }
 
+export const Header = () => (
+  <AuthProvider>
+    <HeaderComponent />
+  </AuthProvider>
+)

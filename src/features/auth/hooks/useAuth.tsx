@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react'
 import { useRouter } from 'next/router'
 import { User } from '@/src/types/user'
-import { login as loginService, logout as logoutService, getCurrentUser } from '../services/authService'
+import { logout as logoutService, getCurrentUser } from '../services/authService'
 
 interface AuthContextType {
   user: User | null
@@ -17,17 +17,21 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState(true)
   const router = useRouter()
 
+  const fetchUser = async () => {
+    try {
+      const currentUser = await getCurrentUser()
+      setUser(currentUser)
+    } catch (error) {
+      console.error('Error initializing auth:', error)
+      localStorage.removeItem('token')
+    }
+  }
+
   useEffect(() => {
     const initAuth = async () => {
       const token = localStorage.getItem('token')
       if (token) {
-        try {
-          const currentUser = await getCurrentUser()
-          setUser(currentUser)
-        } catch (error) {
-          console.error('Error initializing auth:', error)
-          localStorage.removeItem('token')
-        }
+        await fetchUser()
       }
       setLoading(false)
     }
@@ -36,7 +40,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const login = async (email: string, password: string) => {
     try {
-      const { user, token } = await loginService(email, password)
       localStorage.setItem('token', token)
       setUser(user)
       router.push('/dashboard')
@@ -67,4 +70,3 @@ export const useAuth = () => {
   }
   return context
 }
-
