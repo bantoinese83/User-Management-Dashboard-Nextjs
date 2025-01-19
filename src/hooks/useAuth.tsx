@@ -22,14 +22,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [token, setToken] = useState<string | null>(null)
   const router = useRouter()
 
-  useEffect(() => {
-    const storedToken = localStorage.getItem('token')
-    if (storedToken) {
-      setToken(storedToken)
-      fetchUser(storedToken)
-    }
-  }, [fetchUser])
-
   const fetchUser = async (token: string) => {
     try {
       const response = await fetch('/api/auth/user', {
@@ -48,6 +40,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       logout()
     }
   }
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem('token')
+    if (storedToken) {
+      setToken(storedToken)
+      fetchUser(storedToken)
+    }
+  }, [fetchUser])
 
   const login = async (email: string, password: string) => {
     try {
