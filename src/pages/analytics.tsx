@@ -13,6 +13,7 @@ interface UserStats {
 export default function Analytics() {
   const [userStats, setUserStats] = useState<UserStats | null>(null)
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     const fetchUserStats = async () => {
@@ -49,6 +50,7 @@ export default function Analytics() {
   }
 
   if (loading) return <div>Loading...</div>
+  if (error) return <div>{error}</div>
   if (!userStats) return <div>No data available</div>
 
   return (
