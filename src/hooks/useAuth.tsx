@@ -28,7 +28,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setToken(storedToken)
       fetchUser(storedToken)
     }
-  }, [])
+  }, [fetchUser])
 
   const fetchUser = async (token: string) => {
     try {
@@ -91,4 +91,3 @@ export const useAuth = () => {
   }
   return context
 }
-

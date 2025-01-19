@@ -28,7 +28,7 @@ export default function Signup() {
     try {
       await register(data.name, data.email, data.password)
       router.push('/auth/login')
-    } catch (err) {
+    } catch {
       setError('Registration failed. Please try again.')
     }
   }
@@ -84,4 +84,3 @@ export default function Signup() {
     </div>
   )
 }
-

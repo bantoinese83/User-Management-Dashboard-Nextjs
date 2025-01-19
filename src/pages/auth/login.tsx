@@ -12,7 +12,7 @@ export default function Login() {
     setError('')
     try {
       await login(email, password)
-    } catch (err) {
+    } catch {
       setError('Invalid email or password')
     }
   }
@@ -55,4 +55,3 @@ export default function Login() {
     </div>
   )
 }
-

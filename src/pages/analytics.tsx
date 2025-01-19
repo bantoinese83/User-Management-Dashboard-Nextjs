@@ -13,7 +13,6 @@ interface UserStats {
 export default function Analytics() {
   const [userStats, setUserStats] = useState<UserStats | null>(null)
   const [loading, setLoading] = useState(true)
-  const [error, setError] = useState('')
 
   useEffect(() => {
     const fetchUserStats = async () => {
@@ -50,7 +49,6 @@ export default function Analytics() {
   }
 
   if (loading) return <div>Loading...</div>
-  if (error) return <div className="text-red-500">{error}</div>
   if (!userStats) return <div>No data available</div>
 
   return (
@@ -86,4 +84,3 @@ export default function Analytics() {
     </div>
   )
 }
-

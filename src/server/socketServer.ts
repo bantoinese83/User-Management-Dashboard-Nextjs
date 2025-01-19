@@ -25,4 +25,3 @@ export function initializeSocketServer(server: any) {
 
   return io
 }
-

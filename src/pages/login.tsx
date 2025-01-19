@@ -16,7 +16,7 @@ export default function Login() {
     try {
       await login(email, password)
       router.push('/dashboard')
-    } catch (err) {
+    } catch {
       setError('Invalid email or password')
     }
   }
@@ -61,4 +61,3 @@ export default function Login() {
     </Layout>
   )
 }
-

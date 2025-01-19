@@ -24,7 +24,7 @@ export default function Signup() {
         const data = await response.json()
         setError(data.message)
       }
-    } catch (err) {
+    } catch {
       setError('An error occurred. Please try again.')
     }
   }
@@ -82,4 +82,3 @@ export default function Signup() {
     </Layout>
   )
 }
-

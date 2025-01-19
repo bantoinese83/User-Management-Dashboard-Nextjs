@@ -4,7 +4,7 @@ import { AppError } from '@/src/lib/errorHandler'
 
 const prisma = new PrismaClient()
 
-export const getUsers = async (page: number = 1, limit: number = 10): Promise<{ users: User[], pagination: any }> => {
+export const getUsers = async (page: number = 1, limit: number = 10): Promise<{ users: User[], pagination: { page: number, limit: number, total: number, pages: number } }> => {
   const skip = (page - 1) * limit
   const [users, total] = await Promise.all([
     prisma.user.findMany({
@@ -72,7 +72,7 @@ export const activateUser = async (id: string): Promise<User> => {
   return user
 }
 
-export const getUserActivity = async (userId: string, page: number = 1, limit: number = 10): Promise<any> => {
+export const getUserActivity = async (userId: string, page: number = 1, limit: number = 10): Promise<{ activities: { id: string, action: string, timestamp: Date }[], pagination: { page: number, limit: number, total: number, pages: number } }> => {
   // In a real application, you would have a separate table for user activity
   // For this example, we'll just return some mock data
   return {
@@ -88,4 +88,3 @@ export const getUserActivity = async (userId: string, page: number = 1, limit: n
     }
   }
 }
-

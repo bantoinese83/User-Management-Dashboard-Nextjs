@@ -2,7 +2,7 @@ import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
-export async function createSegment(name: string, description: string, criteria: any) {
+export async function createSegment(name: string, description: string, criteria: Record<string, unknown>) {
   return prisma.userSegment.create({
     data: {
       name,
@@ -40,4 +40,3 @@ export async function assignUsersToSegment(segmentId: string) {
 
   return users
 }
-
